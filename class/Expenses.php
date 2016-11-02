@@ -131,7 +131,7 @@ class Expenses
     public function sumExpenses()
     {
 
-        $sql = "SELECT * FROM expenses";
+        $sql = "SELECT cost FROM expenses";
         $result = Connection::checkSql($sql);
         $sum = 0;
 
@@ -144,4 +144,39 @@ class Expenses
         return $sum;
 
     }
+
+    public function loadAllExpenses()
+    {
+
+        $sql = "SELECT * FROM expenses";
+        $ret = [];
+        $result = Connection::checkSql($sql);
+
+        if($result == true && $result->num_rows > 0){
+            foreach($result as $row){
+                $loadedExpense = new Expenses();
+                $loadedExpense->id = $row['id'];
+                $loadedExpense->description = $row['description'];
+                $loadedExpense->cost = $row['cost'];
+                $loadedExpense->date = $row['date'];
+                $ret[] = $loadedExpense;
+
+            }
+            krsort($ret);
+            foreach($ret as $row){
+                echo <<<EOT
+                <tr>
+                    <td>{$row->description}</td>
+                    <td>{$row->cost} zł</td>
+                    <td>{$row->date}</td>
+                    <td>
+                        <input type='hidden' name='id' value='{$row->id}'>
+                        <input type='submit' value='X'>
+                    </td>
+                </tr>
+EOT;
+            }
+        }
+    }
+
 }
