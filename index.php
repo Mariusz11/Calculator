@@ -26,23 +26,23 @@ if(isset($_POST['add'])) {
 <div class="container"><br><br>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 jumbotron">
 
-            <h3>Wydatki</h3>
-            <form class="form-inline" method="POST" action="index.php">
+            <form class="form-inline well" method="POST" action="index.php">
+                <h3>Wydatki</h3>
                 <input type="text" class="form-control" name="description" placeholder="opis">
                 <input type="number" step="0.01" class="form-control" name="cost" placeholder="0">
                 <input type="submit" class="btn btn-default" name="add" value="Dodaj">
             </form><br>
 
-            <h4>Twoje łączne wydatki to:
+            <h4 class="well">Twoje łączne wydatki to:
                 <?php
                     $sumExp = new Expenses();
                     echo $sumExp->sumExpenses();
                 ?> zł
             </h4><br>
 
-            <table class="table">
+            <table class="table well">
                 <?php
                     $allExp = new Expenses();
                     $allExp->loadAllExpenses();
@@ -52,13 +52,13 @@ if(isset($_POST['add'])) {
 
 
 
-        <div class="col-md-6">
-            <h3>Przychody</h3>
-            <form class="form-inline" method="POST" action="login.php">
+        <div class="col-md-6 jumbotron">
+            <form class="form-inline well" method="POST" action="index.php">
+                <h3>Przychody</h3>
                 <div class="form-group">
                     <input type="text" class="form-control" name="description" placeholder="opis"><br>
-                    <input type="number" step="0.01" class="form-control" name="description" placeholder="0">
-                    X <input type="number" class="form-control"  name="cost" placeholder="1">
+                    <input type="number" step="0.01" class="form-control" name="price" placeholder="0">
+                    X <input type="number" class="form-control"  name="multiply" placeholder="1">
                     <input type="submit" class="btn btn-default" name="add" value="Dodaj">
                 </div>
             </form>
