@@ -1,5 +1,16 @@
 <?php
 
+include 'class/Expenses.php';
+
+if(isset($_POST['add'])) {
+
+    $exp = new Expenses();
+    $exp->setDescription(addslashes($_POST['description']));
+    $exp->setCost(addslashes($_POST['cost']));
+    $exp->setDate(date('Y-m-d G-i-s'));
+    $exp->saveToDb();
+    header("Location: index.php");
+}
 
 
 ?>
@@ -18,11 +29,18 @@
     <div class="row">
         <div class="col-md-6">
             <h3>Wydatki</h3>
-            <form class="form-inline" method="POST" action="login.php">
+            <form class="form-inline" method="POST" action="index.php">
                 <input type="text" class="form-control" name="description" placeholder="opis">
                 <input type="number" step="0.01" class="form-control" name="cost" placeholder="0">
                 <input type="submit" class="btn btn-default" name="add" value="Dodaj">
             </form>
+
+            <h4>Twoje łączne wydatki to:
+                <?php
+                        $allExp = new Expenses();
+                        echo $allExp->sumExpenses();
+                ?>
+            </h4>
         </div>
         <div class="col-md-6">
             <h3>Przychody</h3>
