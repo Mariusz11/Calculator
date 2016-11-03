@@ -6,7 +6,7 @@
  * Date: 02.11.16
  * Time: 15:29
  */
-class Connect
+class Connection
 {
     static public function getConnection()
     {
@@ -22,6 +22,16 @@ class Connect
         }
 
         return $conn;
+    }
+
+    static public function checkSql($sql)
+    {
+        $connection = self::getConnection();
+        $result = $connection->query($sql);
+
+        if (!$result || $connection->error) {
+            die(sprintf("Połączenie nieudane. SQL: %s \n Bład: %s\n", $sql, $connection->error));
+        }return $result;
     }
 
 }

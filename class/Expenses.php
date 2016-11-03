@@ -1,35 +1,5 @@
 <?php
 
-class Connection
-{
-    static public function getConnection()
-    {
-        $conn = new mysqli(
-            '127.0.0.1',
-            'root',
-            'coderslab',
-            'Calculator');
-
-        if(mysqli_connect_errno()){
-            $conn_error = mysqli_connect_error();
-            return "Błąd połączenia bazy danych:" . $conn_error;
-        }
-
-        return $conn;
-    }
-
-    static public function checkSql($sql)
-    {
-        $connection = self::getConnection();
-        $result = $connection->query($sql);
-
-        if (!$result || $connection->error) {
-            die(sprintf("Połączenie nieudane. SQL: %s \n Bład: %s\n", $sql, $connection->error));
-        }return $result;
-    }
-
-}
-
 class Expenses
 {
 
@@ -128,23 +98,6 @@ class Expenses
         }    return false;
     }
 
-    public function sumExpenses()
-    {
-
-        $sql = "SELECT cost FROM expenses";
-        $result = Connection::checkSql($sql);
-        $sum = 0;
-
-        if($result == true && $result->num_rows > 0){
-            foreach ($result as $row){
-                $sum = $sum + $row['cost'];
-            }
-        }
-
-        return $sum;
-
-    }
-
     public function loadAllExpenses()
     {
 
@@ -170,13 +123,23 @@ class Expenses
                     <td>{$row->cost} zł</td>
                     <td>{$row->date}</td>
                     <td>
-                        <input type='hidden' name='id' value='{$row->id}'>
-                        <input type='submit' value='X'>
+                        <form method="POST">
+                            <input type='hidden' name='idExp' value='{$row->id}'>
+                            <input type='submit' value='X'>
+                        </form>
                     </td>
                 </tr>
 EOT;
             }
         }
+    }
+
+    public function deleteExpense($id)
+    {
+        $sql = "DELETE FROM expenses WHERE id=$id";
+        Connection::checkSql($sql);
+
+        return true;
     }
 
 }
