@@ -8,7 +8,7 @@
  */
 class Calculate
 {
-    public function sumRevenues()
+    public function sumAllRevenues()
     {
         $sql = "SELECT total FROM revenues";
         $result = Connection::checkSql($sql);
@@ -23,7 +23,7 @@ class Calculate
 
     }
 
-    public function sumExpenses()
+    public function sumAllExpenses()
     {
         $sql = "SELECT cost FROM expenses";
         $result = Connection::checkSql($sql);
@@ -40,9 +40,10 @@ class Calculate
 
     public function total()
     {
-        $rev = Calculate::sumRevenues();
-        $exp = Calculate::sumExpenses();
+        $rev = Calculate::sumAllRevenues();
+        $exp = Calculate::sumAllExpenses();
         $total = $rev - $exp;
+        $total = round($total, 2);
 
         return $total;
     }

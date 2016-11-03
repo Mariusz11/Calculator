@@ -85,11 +85,22 @@ class Revenues {
 
         }    return false;
     }
-    
+
     public function loadAllRevenues()
     {
-
         $sql = "SELECT * FROM revenues";
+        self::loadRevenues($sql);
+
+        return true;
+    }
+
+    public function loadRevenuesByDate($from, $to)
+    {
+        $sql = "SELECT * FROM revenues WHERE date BETWEEN ($from AND $to)";
+        self::loadRevenues($sql);
+    }
+    public function loadRevenues($sql)
+    {
         $ret = [];
         $result = Connection::checkSql($sql);
 

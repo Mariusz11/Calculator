@@ -59,9 +59,9 @@ class Expenses
     /**
      * @param mixed $cost
      */
-    public function setCost($cost)
+    public function setCost($cost, $rate)
     {
-        $this->cost = $cost;
+        $this->cost = $cost * $rate;
     }
 
     /**
