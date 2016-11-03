@@ -16,6 +16,7 @@ if(isset($_POST['idRev'])){
     $delRev->deleteRevenue(addslashes($_POST['idRev']));
     header("Location: index.php");
 }
+
 ?>
 
 <html>
@@ -30,9 +31,9 @@ if(isset($_POST['idRev'])){
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $(function() {
-            $( "#dateFrom, #dateTo" ).datepicker();
-        });
+        $( function() {
+            $( "#dateFrom, #dateTo" ).datepicker({ dateFormat: 'yy-mm-dd' });
+        } );
     </script>
 </head>
 <body>
@@ -53,9 +54,9 @@ if(isset($_POST['idRev'])){
 
         <div class="col-md-6">
             <form class="form-inline" method="POST" action="showByDate.php">
-                od: <input type="date" id="dateFrom" />
-                do: <input type="date" id="dateTo" />
-                <input type="submit" value="Pokaż">
+                od: <input type="date" name="dateFrom" id="dateFrom" />
+                do: <input type="date" name="dateTo" id="dateTo" />
+                <input type="submit" name="date" value="Pokaż">
             </form>
         </div>
     </div>
@@ -74,8 +75,15 @@ if(isset($_POST['idRev'])){
 
             <table class="table well">
                 <?php
-                $allExp = new Expenses();
-                $allExp->loadAllExpenses();
+                if(isset($_POST['date'])) {
+
+                    $from = addslashes($_POST['dateFrom']);
+                    $to = addslashes($_POST['dateTo']);
+
+                    $loadExpensesByDate = new Expenses();
+                    $loadExpensesByDate->loadExpensesByDate($from, $to);
+
+                }
                 ?>
             </table>
         </div>
@@ -93,8 +101,15 @@ if(isset($_POST['idRev'])){
 
             <table class="table well">
                 <?php
-                $allRev = new Revenues();
-                $allRev->loadAllRevenues();
+                if(isset($_POST['date'])) {
+
+                    $from = addslashes($_POST['dateFrom']);
+                    $to = addslashes($_POST['dateTo']);
+
+                    $loadReveneuesByDate = new Revenues();
+                    $loadReveneuesByDate->loadRevenuesByDate($from, $to);
+
+                }
                 ?>
             </table>
         </div>

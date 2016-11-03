@@ -100,8 +100,21 @@ class Expenses
 
     public function loadAllExpenses()
     {
-
         $sql = "SELECT * FROM expenses";
+        self::loadExpenses($sql);
+
+        return true;
+    }
+
+    public function loadExpensesByDate($from, $to)
+    {
+        $sql = "SELECT * FROM expenses WHERE date BETWEEN '$from' AND '$to'";
+        self::loadExpenses($sql);
+    }
+
+    public function loadExpenses($sql)
+    {
+
         $ret = [];
         $result = Connection::checkSql($sql);
 

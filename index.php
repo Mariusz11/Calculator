@@ -11,7 +11,7 @@ if(isset($_POST['addExpense'])) {
     $exp = new Expenses();
     $exp->setDescription(addslashes($_POST['description']));
     $exp->setCost(addslashes($_POST['cost']), $_POST['rate']);
-    $exp->setDate(date('Y-m-d G-i-s'));
+    $exp->setDate(date('Y-m-d'));
     $exp->saveToDb();
     header("Location: index.php");
 }
@@ -22,8 +22,8 @@ if(isset($_POST['addRevenue'])) {
     $rev->setDescription(addslashes($_POST['description']));
     $rev->setPrice(addslashes($_POST['price']));
     $rev->setQuantity(addslashes($_POST['quantity']));
-    $rev->setTotal(24);
-    $rev->setDate(date('Y-m-d G-i-s'));
+    $rev->setTotal();
+    $rev->setDate(date('Y-m-d'));
     $rev->saveToDb();
     header("Location: index.php");
 }
@@ -53,10 +53,9 @@ if(isset($_POST['idRev'])){
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        $(function() {
-            $( "#dateFrom, #dateTo" ).datepicker({
-                dateFormat: "yy-mm-dd"});
-        });
+        $( function() {
+            $( "#dateFrom, #dateTo" ).datepicker({ dateFormat: 'yy-mm-dd' });
+        } );
     </script>
 </head>
 <body>
@@ -99,21 +98,21 @@ if(isset($_POST['idRev'])){
                 <div class="form-group">
                     <label class="control-label col-sm-3">Opis</label>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="description" placeholder="opis"><br>
+                        <input type="text" class="form-control" name="description" value="opis"><br>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-md-3">Koszt $</label>
                     <div class="col-md-9">
-                        <input type="number" step="0.01" class="form-control" name="cost" placeholder="0"><br>
+                        <input type="number" step="0.01" class="form-control" name="cost" value="0"><br>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-md-3">Kurs $</label>
                     <div class="col-md-9">
-                        <input type="number" step="0.01" class="form-control"  name="rate" placeholder="1">
+                        <input type="number" step="0.01" class="form-control"  name="rate" value="4.1">
                     </div>
                 </div>
 
@@ -150,21 +149,21 @@ if(isset($_POST['idRev'])){
                 <div class="form-group">
                     <label class="control-label col-md-3">Opis</label>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" name="description" placeholder="opis"><br>
+                        <input type="text" class="form-control" name="description" value="opis"><br>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-md-3">Cena zł</label>
                     <div class="col-md-9">
-                        <input type="number" step="0.01" class="form-control" name="price" placeholder="0"><br>
+                        <input type="number" step="0.01" class="form-control" name="price" value="0"><br>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-md-3">Ilość</label>
                     <div class="col-md-9">
-                        <input type="number" class="form-control"  name="quantity" placeholder="1">
+                        <input type="number" class="form-control"  name="quantity" value="1">
                     </div>
                 </div>
 
